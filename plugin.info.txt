@@ -1,0 +1,7 @@
+base    datepicker
+author  lisps
+email   
+date    2013-10-28
+name    Datepicker
+desc    use a calendar popup to pick a date
+url     http://dokuwiki.org/plugin:datepicker
