@@ -84,14 +84,15 @@ foreach($ranges as $range_index=>&$range_part){
 		$range_part .= isset($range_delemiters[$range_index])?$range_delemiters[$range_index]:'';
 	}
 }
-	$data = implode($ranges);	
-	
-	$param = array(
-		'mode'	=> $mode,
-		'index'	=> $datecount
-	);
-	$summary= $mode.' '.$datecount." changed from ".$olddatestr." to ".$datestr;
-	$Hajax->saveWikiPage($data,$summary,true,$param);
 
+$data = implode($ranges);	
 
-?>
+$param = array(
+    'mode'	=> $mode,
+    'index'	=> $datecount
+);
+$summary= $mode.' '.$datecount." changed from ".$olddatestr." to ".$datestr;
+
+$param['msg'] = sprintf($Hajax->getLang('changed_from_to'),hsc($mode),hsc($olddatestr),hsc($datestr));
+
+$Hajax->saveWikiPage($data,$summary,true,$param);

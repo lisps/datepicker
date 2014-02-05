@@ -1,0 +1,1 @@
+https://github.com/lisps/ajaxedit.git    lib/plugins/ajaxedit

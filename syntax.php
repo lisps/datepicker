@@ -45,7 +45,7 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     /*
      * Handle the matches
      */
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler &$handler) {
 		$mode=trim(substr($match,1,10));
 		$option = trim(substr($match,11,1));
 		//echo $break;
@@ -68,16 +68,16 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     }
         
     function iswriter(){
-		global $conf;
+		global $ID;
 		global $INFO;
-		
-		return($conf['useacl'] && $INFO['perm'] > AUTH_READ);
+
+		return(auth_quickaclcheck($ID) > AUTH_READ);
 	}
     
     /*
      * Create output
      */
-    function render($mode, &$renderer, $opt) {
+    function render($mode, Doku_Renderer &$renderer, $opt) {
 		global $INFO;
 		
 		if($mode == 'metadata') return false;
