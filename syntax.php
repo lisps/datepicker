@@ -45,7 +45,7 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     /*
      * Handle the matches
      */
-    function handle($match, $state, $pos, Doku_Handler &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
 		$mode=trim(substr($match,1,10));
 		$option = trim(substr($match,11,1));
 		//echo $break;
@@ -77,7 +77,7 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     /*
      * Create output
      */
-    function render($mode, Doku_Renderer &$renderer, $opt) {
+    function render($mode, Doku_Renderer $renderer, $opt) {
 		global $INFO;
 		
 		if($mode == 'metadata') return false;
