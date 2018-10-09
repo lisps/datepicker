@@ -612,13 +612,22 @@ Calendar.cellClick = function(el, ev) {
 			return;
 		}
 		date = new Date(cal.date);
-		if (el.navtype == 0)
+		if (el.navtype == 0) {
+			var todayDate = new Date();
+			if(todayDate.print('%Y-%m-%d') == date.print('%Y-%m-%d')) {
+				cal.dateClicked = true;
+			} else {
+				cal.dateClicked = false;
+			}
 			date.setDateOnly(new Date()); // TODAY
+			
+		} else {
+			cal.dateClicked = false;
+		}
 		// unless "today" was clicked, we assume no date was clicked so
 		// the selected handler will know not to close the calenar when
 		// in single-click mode.
 		// cal.dateClicked = (el.navtype == 0);
-		cal.dateClicked = false;
 		var year = date.getFullYear();
 		var mon = date.getMonth();
 		function setMonth(m) {

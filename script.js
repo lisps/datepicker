@@ -20,7 +20,8 @@ function datepickerInit(id,emptyString)
 			align          :    "Br",           // alignment (defaults to "Bl")
 			singleClick    :    true,
 			onUpdate	   :    datepickeronUpdate,
-			electric       :    false
+			electric       :    false,
+			firstDay       :    1
 		});
 	EMPTYSTRINGDATE = emptyString;
 }
@@ -53,10 +54,16 @@ function datepickeronUpdate(calendar)
 	else {
 		datestr = calendar.date.print(par.daFormat);
 	}
+	var idx = null;
+	if(jQuery("#"+par.displayArea.id).parents('div.sortable').length != 0) {
+		idx = jQuery("#"+par.displayArea.id).data("plugin-datepicker-idx");
+	} else {
+		idx = ajaxedit_getIdxByIdClass(par.displayArea.id, //DOM-id
+		'datepicker');		//DOM-class
+	}
 	ajaxedit_send(
 		'datepicker',		//pluginname
-		ajaxedit_getIdxByIdClass(par.displayArea.id, //DOM-id
-		'datepicker'),		//DOM-class
+		idx,
 		datepickerdone,		//success-function
 		{
 			datestr:datestr,

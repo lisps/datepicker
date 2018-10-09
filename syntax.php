@@ -45,7 +45,7 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     /*
      * Handle the matches
      */
-    function handle($match, $state, $pos, Doku_Handler &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
 		$mode=trim(substr($match,1,10));
 		$option = trim(substr($match,11,1));
 		//echo $break;
@@ -68,16 +68,16 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     }
         
     function iswriter(){
-		global $ID;
+		global $conf;
 		global $INFO;
-
-		return(auth_quickaclcheck($ID) > AUTH_READ);
+		
+		return($conf['useacl'] && $INFO['perm'] > AUTH_READ);
 	}
     
     /*
      * Create output
      */
-    function render($mode, Doku_Renderer &$renderer, $opt) {
+    function render($mode, Doku_Renderer $renderer, $opt) {
 		global $INFO;
 		
 		if($mode == 'metadata') return false;
@@ -110,17 +110,17 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
 					case '#':
 						$renderer->doc .="<a class='".$mode."picker' style='cursor:pointer;' id='".$mode."picker__button__".$id."'>";
 						$renderer->doc .="<img  src='$image' alt='Kalender' onload='".$mode."pickerInit(".$id.",\"".$empty."\")' style='display:none;' />";
-						$renderer->doc .="<span class='".$mode."picker' id='".$mode."picker__show__".$id."' >";
+						$renderer->doc .="<span class='".$mode."picker' id='".$mode."picker__show__".$id."' data-plugin-datepicker-idx='".$id."'>";
 						$renderer->doc .= hsc($opt['date']);
 						$renderer->doc .= "</span></a>";
 						break;
 					case '\\':
-						$renderer->doc .="<span class='".$mode."picker' id='".$mode."picker__show__".$id."'>";
+						$renderer->doc .="<span class='".$mode."picker' id='".$mode."picker__show__".$id."' data-plugin-datepicker-idx='".$id."'>";
 						$renderer->doc .= hsc($opt['date'])."</span><br>";
 						$renderer->doc .="<img class='".$mode."picker' src='$image' alt='Kalender' style='cursor:pointer;' id='".$mode."picker__button__".$id."' onload='".$mode."pickerInit(".$id.",\"".$empty."\")' />";
 						break;
 					case false:
-						$renderer->doc .="<span class='".$mode."picker' id='".$mode."picker__show__".$id."'>";
+						$renderer->doc .="<span class='".$mode."picker' id='".$mode."picker__show__".$id."' data-plugin-datepicker-idx='".$id."'>";
 						$renderer->doc .= hsc($opt['date'])."</span>";
 						$renderer->doc .="<img class='".$mode."picker' src='$image' alt='Kalender' style='cursor:pointer;' id='".$mode."picker__button__".$id."' onload='".$mode."pickerInit(".$id.",\"".$empty."\")' />";
 						break;
