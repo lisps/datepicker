@@ -5,10 +5,12 @@
  */
 class plugin_datepicker_syntax_test extends DokuWikiTest {
 
+    protected $plugin;
     public function setup() {
         $this->pluginsEnabled[] = 'datepicker';
         $this->pluginsEnabled[] = 'ajaxedit';
         parent::setup();
+        $this->plugin = plugin_load('action', 'datepicker'); 
     }
 
     
@@ -26,10 +28,24 @@ class plugin_datepicker_syntax_test extends DokuWikiTest {
         $doc = phpQuery::newDocument($xhtml);
         
         $mselector = pq("span.datepicker",$doc);
+        $this->assertTrue($mselector->length === 0);
+        $mselector = pq("p",$doc);
+        $this->assertTrue($mselector->length === 1);
+        $this->assertEquals(
+            $this->plugin->getConf('emptyStringDate').DOKU_LF.
+            $this->plugin->getConf('emptyStringDate').DOKU_LF.
+            $this->plugin->getConf('emptyStringDate'),trim($mselector->eq(0)->text()));
+        
+        
+        $INFO['perm'] = AUTH_EDIT;
+        $xhtml = p_wiki_xhtml($id);
+        $doc = phpQuery::newDocument($xhtml);
+        
+        $mselector = pq("span.datepicker",$doc);
         $this->assertTrue($mselector->length === 3);
-        $this->assertEquals('-/-',trim($mselector->eq(0)->text()));
-        $this->assertEquals('-/-',trim($mselector->eq(1)->text()));
-        $this->assertEquals('-/-',trim($mselector->eq(2)->text()));
+        $this->assertEquals($this->plugin->getConf('emptyStringDate'), trim($mselector->eq(0)->text()));
+        $this->assertEquals($this->plugin->getConf('emptyStringDate'), trim($mselector->eq(1)->text()));
+        $this->assertEquals($this->plugin->getConf('emptyStringDate'), trim($mselector->eq(2)->text()));
     }
     
     public function test_basic_weekpicker_empty_syntax() {
@@ -46,13 +62,27 @@ class plugin_datepicker_syntax_test extends DokuWikiTest {
         $doc = phpQuery::newDocument($xhtml);
         
         $mselector = pq("span.weekpicker",$doc);
+        $this->assertTrue($mselector->length === 0);
+        $mselector = pq("p",$doc);
+        $this->assertTrue($mselector->length === 1);
+        $this->assertEquals(
+            $this->plugin->getConf('emptyStringWeek').DOKU_LF.
+            $this->plugin->getConf('emptyStringWeek').DOKU_LF.
+            $this->plugin->getConf('emptyStringWeek'),trim($mselector->eq(0)->text()));
+        
+        $INFO['perm'] = AUTH_EDIT;
+        $xhtml = p_wiki_xhtml($id);
+        $doc = phpQuery::newDocument($xhtml);
+        
+        $mselector = pq("span.weekpicker",$doc);
         $this->assertTrue($mselector->length === 3);
-        $this->assertEquals('-/-',trim($mselector->eq(0)->text()));
-        $this->assertEquals('-/-',trim($mselector->eq(1)->text()));
-        $this->assertEquals('-/-',trim($mselector->eq(2)->text()));
+        $this->assertEquals($this->plugin->getConf('emptyStringWeek'), trim($mselector->eq(0)->text()));
+        $this->assertEquals($this->plugin->getConf('emptyStringWeek'), trim($mselector->eq(1)->text()));
+        $this->assertEquals($this->plugin->getConf('emptyStringWeek'), trim($mselector->eq(2)->text()));
     }
     public function test_basic_datepicker_syntax() {
         global $INFO;
+        $INFO['perm'] = AUTH_EDIT;
         $id = 'test:plugin_datepicker:syntax3';
         $INFO['id'] = $id;
         saveWikiText($id,
@@ -73,6 +103,7 @@ class plugin_datepicker_syntax_test extends DokuWikiTest {
     
     public function test_basic_weekpicker_syntax() {
         global $INFO;
+        $INFO['perm'] = AUTH_EDIT;
         $id = 'test:plugin_datepicker:syntax4';
         $INFO['id'] = $id;
         saveWikiText($id,

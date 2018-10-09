@@ -1,7 +1,7 @@
 base    datepicker
-author  lisps
-email   
-date    2013-10-28
+author  lisps, peterfromearth
+email   coder@peterfromearth.de
+date    2018-10-09
 name    Datepicker
 desc    use a calendar popup to pick a date
 url     http://dokuwiki.org/plugin:datepicker

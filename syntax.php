@@ -70,8 +70,8 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
     function iswriter(){
 		global $conf;
 		global $INFO;
-		
-		return($conf['useacl'] && $INFO['perm'] > AUTH_READ);
+
+		return(!$conf['useacl'] || $INFO['perm'] > AUTH_READ);
 	}
     
     /*
@@ -105,7 +105,7 @@ class syntax_plugin_datepicker extends DokuWiki_Syntax_Plugin
 			if ($this->iswriter()==TRUE && $Hajax) {
 				$id = $opt["id"];
 				$renderer->cdata("\n");
-				$image = DOKU_URL."lib/plugins/datepicker/".$mode.".gif";
+				$image = DOKU_URL."lib/plugins/datepicker/images".$mode.".gif";
 				switch($opt['option']){
 					case '#':
 						$renderer->doc .="<a class='".$mode."picker' style='cursor:pointer;' id='".$mode."picker__button__".$id."'>";
