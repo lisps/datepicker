@@ -61,7 +61,7 @@ function datepickeronUpdate(calendar)
 		idx = ajaxedit_getIdxByIdClass(par.displayArea.id, //DOM-id
 		'datepicker');		//DOM-class
 	}
-	ajaxedit_send(
+	ajaxedit_send2(
 		'datepicker',		//pluginname
 		idx,
 		datepickerdone,		//success-function
@@ -85,7 +85,7 @@ function weekpickeronUpdate(calendar)
 		datestr = calendar.date.print(par.daFormat);
 	}	
 
-	ajaxedit_send(
+	ajaxedit_send2(
 		'datepicker',		//pluginname
 		ajaxedit_getIdxByIdClass(
 			par.displayArea.id, //DOM-id
